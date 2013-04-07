@@ -14,7 +14,7 @@ screw_radius = 1.75;
 
 
 // parts
-//y_end_motor_mount(); 
+y_end_motor_mount(); 
 //!y_end_bearing_mount(); 
 
 
