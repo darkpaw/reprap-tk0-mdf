@@ -9,7 +9,7 @@ module z_shelf_bearing(){
 
 	difference(){
 
-		linear_extrude(height=10) z_shelf_2d();
+		linear_extrude(height=10) z_shelf_2d(); 
 
 		union(){	
 			// hole for rod

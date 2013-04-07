@@ -9,26 +9,27 @@ x_rod_spacing = 70;
 rod_radius = 4;
 rod_inset = 12;
 bearing_mount_width = 7;
-half_belt_gap_length = 22;
+half_belt_gap_length = 20;
  
 // threaded rod mount
 rod_height = 12;
 rod_mount_thickness = 26;
    
 
-rod_clamp_holes(); 
-x_end_base();
-x_end_base_2d();
-x_end_rod_mount_2d(); 
-threaded_rod_mount();
-bearing_mount_2d();
-bearing_mount();
-x_end_motor_bracket_2d();
+// testing
 
-mirror([1,0,0]) x_end_with_bearing_or_motor(1);
+//rod_clamp_holes(); 
+//x_end_base();
+//x_end_base_2d();
+//x_end_rod_mount_2d(); 
+//threaded_rod_mount(); 
+//bearing_mount_2d();
+//bearing_mount();
+//x_end_motor_bracket_2d();
 
-!x_end_with_bearing_or_motor(0);
+//mirror([1,0,0]) x_end_with_bearing_or_motor(1);
 
+//!x_end_with_bearing_or_motor(0);
 
 module wiring_support(){
 
@@ -67,13 +68,13 @@ module x_end_with_bearing_or_motor(motor=1){
 
 			// X rod mounts
 			translate([rod_pos, x_end_width / 2, x_end_thickness])
-				linear_extrude(height=x_end_thickness)
+				linear_extrude(height=x_end_thickness+3)
 					rotate([0,0,180])
 						x_end_rod_mount_2d();
 				
 	
 			translate([-rod_pos, x_end_width / 2, x_end_thickness])
-				linear_extrude(height=x_end_thickness)
+				linear_extrude(height=x_end_thickness+3)
 					rotate([0,0,180])
 						x_end_rod_mount_2d();
 	
@@ -298,7 +299,7 @@ module x_end_base(){
 module x_end_rod_mount_2d(){
 
 	rod_end_height = rod_inset;
-	rod_end_width = 12; 
+	rod_end_width = 16.5; 
 
 	difference(){
 

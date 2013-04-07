@@ -13,15 +13,15 @@ screw_radius = 1.75;
 difference(){
 
 	rotate([90,0,0]) 
-		y_end(); 
+		y_end();  
 
 
-	rotate([0,0,45]) 
-		warp_prevention();
+	//rotate([0,0,45]) 
+	//	warp_prevention();
 
-	translate([sqrt(200),0,2])
-		rotate([0,0,45]) 
-			warp_prevention();
+	//translate([sqrt(200),0,2])
+	//	rotate([0,0,45]) 
+	//		warp_prevention();
 
 
 }

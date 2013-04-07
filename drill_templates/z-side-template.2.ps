@@ -1,0 +1,105 @@
+
+%!PS-Adobe-3.0
+%%Orientation: Landscape
+%%DocumentMedia: a4 595 842 80 () ()
+%%Pages: 1
+%%EndComments
+%%EndProlog
+%%BeginSetup
+  % A4, rotated 90 degrees ACW
+  << /PageSize [595 842] /Orientation 3 >> setpagedevice
+%%EndSetup
+%%Page: 1 1
+%%BeginPageSetup
+  90 rotate 0 -595 translate
+  %842 0 translate
+  %-1 1 scale 
+%%EndPageSetup
+  
+  
+  % This page prints on standard A4 portrait paper.
+  % "%%Orientation: Landscape" allows normal viewing in GSview.
+  % "/Orientation 3" allows normal viewing after converting to PDF.
+  % This is the preferred way to do landscape documents in 
+  % PostScript, especially when converting to PDF.
+  /Helvetica findfont 100 scalefont setfont
+  72 72 moveto
+  (Z side bottom) show
+  
+gsave 
+
+/inch {72 mul} def      % Convert inches->points (1/72 inch)
+/mm { 72 mul 25.4 div } def
+
+/drill { 
+	3 dict begin
+	/radius exch def
+	/y exch def
+	/x exch def
+	gsave
+	0.5 setlinewidth
+	
+	x  mm y  mm moveto
+	newpath
+	radius -2 mul x add mm y mm  moveto
+	radius 2 mul x add mm y mm lineto
+	stroke
+	
+	newpath
+	x mm radius -2 mul y add mm  moveto
+	x mm radius 2 mul y add mm lineto
+	stroke
+	
+	newpath
+	x   mm y mm radius mm 0 360 arc closepath
+	stroke
+	
+	grestore
+	end
+	} def
+
+0.5 setlinewidth
+0 0 0 setrgbcolor 
+
+newpath
+95 mm 115 mm moveto
+95 mm 165 mm lineto
+135 mm 165 mm lineto
+135 mm 115 mm lineto
+closepath
+stroke
+
+50 22 sub 60 1.5 drill
+50 22 add 60 1.5 drill
+50 22 sub 60 65 add 1.5 drill
+50 22 add 60 65 add 1.5 drill
+
+50 60 55 add 3 drill
+
+20 8 1.5 drill
+20 22 add 8 1.5 drill
+
+280 22 sub 8 1.5 drill
+280 8 1.5 drill
+
+150 11 sub 8 1.5 drill
+150 11 add 8 1.5 drill 
+
+
+newpath
+50 mm 5 mm moveto
+50 mm 275 mm lineto
+closepath
+stroke
+
+newpath
+0 mm 5 mm moveto
+300 mm 5 mm lineto
+closepath
+stroke
+
+
+showpage 
+grestore 
+%%Trailer
+%%EOF

@@ -28,7 +28,7 @@ nut_dia = nut_dia_perimeter;
 nut_surround_thickness = 2;
 
 // main body dimensions
-body_wall_thickness = 2;
+body_wall_thickness = 5;
 body_width = LM8UU_dia + (2*body_wall_thickness);
 body_height = body_width;
 body_length = LM8UU_length;
@@ -37,7 +37,8 @@ screw_bushing_space = 1;
 screw_elevation = LM8UU_dia + body_wall_thickness + (screw_thread_dia/2) +screw_bushing_space;
 
 // TEST - uncomment to render in openscad:
-lm8uu_holder(1);		// WITH mountplate
+
+// lm8uu_holder(1);		// WITH mountplate
 // lm8uu_holder();		// WITHOUT mountplate
 
 
@@ -101,11 +102,12 @@ module lm8uu_holder(with_mountplate=false)
 				cube([(body_width-gap_width)/2,screw_head_dia+(nut_surround_thickness*2),screw_elevation],center=true);
 		}
 	
+		// fs removed for dual
 		// bushing hole
-		translate([0,0,LM8UU_dia/2+2])
-			rotate([90,0,0])
+	//	translate([0,0,LM8UU_dia/2+2])
+	//		rotate([90,0,0])
 //				cylinder(r=LM8UU_dia/2, h=LM8UU_length+1, center=true);
-				translate([0,0,-(LM8UU_length+1)/2]) polyhole(LM8UU_dia,LM8UU_length+1);	// TESTING POLYHOLE MODULE FOR BETTER LM8UU FIT
+//				translate([0,0,-(LM8UU_length+1)/2]) polyhole(LM8UU_dia,LM8UU_length+1);	// TESTING POLYHOLE MODULE FOR BETTER LM8UU FIT
 	
 		// top gap
 		translate([-(gap_width/2),-(body_length/2)-1,body_height/2])

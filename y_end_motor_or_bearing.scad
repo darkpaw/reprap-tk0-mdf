@@ -6,14 +6,17 @@ y_rod_height = 70;
 rod_radius = 4;
 screw_radius = 1.75;
 
-y_end_2d();
-teardrop_cylinder(5, 50);
-
-y_end_motor_mount(); 
-!y_end_bearing_mount(); 
-
+// testing
+//y_end_2d();
+//teardrop_cylinder(5, 50);
 //rail_mount();
 //bearing_mount_2d();
+
+
+// parts
+//y_end_motor_mount(); 
+//!y_end_bearing_mount(); 
+
 
 
 module bearing_mount_2d(){
