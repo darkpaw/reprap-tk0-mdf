@@ -15,7 +15,13 @@ openscad -o STL/z_top.stl z_top.scad
 openscad -o STL/Z-LM8UU-holder.stl Z-LM8UU-holder.scad	
 openscad -o STL/z_bottom.stl z_bottom.scad				
 
+# X carriage
+openscad -o STL/x_carriage_left.stl x-carriage-left.scad
+openscad -o STL/x_carriage_right.stl x-carriage-right.scad
 
+# endstops
+openscad -o STL/x_endstop.stl x-endstop.scad
+openscad -o STL/yz_endstop.stl yz-endstop.scad
 
 
 
