@@ -1,8 +1,9 @@
 	
 include <common_components.scad>
+include <configuration.scad>
 
 y_rod_height = 70;
-rod_radius = 4;
+
 screw_radius = 1.75;
 
 
@@ -32,7 +33,6 @@ difference(){
 module y_end(){
 
 
-
 	difference(){
 	
 		union(){
@@ -51,9 +51,6 @@ module y_end(){
 		translate([-50, -40, -5])
 			#cube([100,40, 90]);
 	
-	
-		//translate([-50, 16, -1])
-		//	#cube([150,100, 40]);
 
 		for(x = [17, -17]){ 			
 			translate([x, 8, -1])
@@ -78,12 +75,12 @@ module y_end(){
 		translate([-30, 8, 25])
 			rotate([-90,0,0])
 				rotate([0,90,0])
-					#teardrop_cylinder(r=rod_radius, h=60);
+					#teardrop_cylinder(r=frame_rod_radius, h=60);
 	
 		translate([-30, 8, 50])
 			rotate([-90,0,0])
 				rotate([0,90,0])
-					#teardrop_cylinder(r=rod_radius, h=60);
+					#teardrop_cylinder(r=frame_rod_radius, h=60);
 
 
 
@@ -95,18 +92,20 @@ module y_end(){
 module y_end_2d(){
 
 
+	block_size = 4.0;
+
 	hull(){
 		
-		translate([-9, 0])
+		translate([-(block_size+5), 0])
 			circle(r=5);
 
-		translate([9, 0])
+		translate([block_size+5, 0])
 			circle(r=5);
 
-		translate([-6, 15])
+		translate([-(block_size+2), 15])
 			circle(r=5);
 
-		translate([6, 15])
+		translate([block_size+2, 15])
 			circle(r=5);
 
 

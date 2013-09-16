@@ -1,9 +1,8 @@
 	
 include <common_components.scad>
 include <y-end-motor-bracket.scad>
+include <configuration.scad>
 
-y_rod_height = 70;
-rod_radius = 4;
 screw_radius = 1.75;
 
 // testing
@@ -72,11 +71,11 @@ module y_end_bearing_mount(){
 
 		translate([-35, 5, 8])
 			rotate([0,90,0])
-				#teardrop_cylinder(r=rod_radius, h=70);
+				#teardrop_cylinder(r=frame_rod_radius, h=70);
 	
 		translate([-35, 5, 33])
 			rotate([0,90,0])
-				#teardrop_cylinder(r=rod_radius, h=70);
+				#teardrop_cylinder(r=frame_rod_radius, h=70);
 
 
 	}
@@ -105,11 +104,11 @@ module y_end_motor_mount(){
 	
 		translate([-35, 5, 8])
 			rotate([0,90,0])
-				#teardrop_cylinder(r=rod_radius, h=70);
+				#teardrop_cylinder(r=frame_rod_radius, h=70);
 	
 		translate([-35, 5, 33])
 			rotate([0,90,0])
-				#teardrop_cylinder(r=rod_radius, h=70);
+				#teardrop_cylinder(r=frame_rod_radius, h=70);
 
 
 	}

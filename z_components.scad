@@ -1,21 +1,24 @@
 
-z_shelf_depth = 77;
+include <common_components.scad>
+include <configuration.scad>
+
+
+z_shelf_depth = z_threaded_to_smooth_spacing + 45;
 z_shelf_round_radius = 5;
 z_shelf_small_width = 40;
 z_shelf_large_width = 75;
 z_shelf_height = 10;
 
-z_shelf_bearing_pos = 50;
-z_shelf_bearing_depth = 7;
 
 z_shelf_rod_pos = 20; 
+z_shelf_bearing_pos = z_shelf_rod_pos + z_threaded_to_smooth_spacing;
+z_shelf_bearing_depth = 7;
 
-rod_radius = 4;
-bearing_radius = 11;
+
+
 
 tab_width = 13.5;
 
-include <common_components.scad>
 
 module z_shelf_2d() {
 

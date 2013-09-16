@@ -1,24 +1,26 @@
-include <lm8uu-holder-slim_v1-1.scad>
+use <lm8uu-holder-slim_v1-1.scad>
+include <configuration.scad>
+
 
 // from LM8UU holder file
-LM8UU_dia = 15.2;
+//LM8UU_dia = 15.2; 
+
 body_wall_thickness = 5.6;
 
 // from x_end 
-x_end_length = 100; 
+x_end_length = 100;  
 
 dowel_hole_from_centre = x_end_length / 2 - 9;
 
-holder_base_to_rod_centre = LM8UU_dia / 2 + body_wall_thickness; 
-x_end_base_to_rod_centre = 20;
+holder_base_to_rod_centre = 12.6;
+
 
 holder_spacing = 24; 
 
-z_rod_spacing = 30;
+z_rod_spacing = z_threaded_to_smooth_spacing;  // from config
+bearing_centre_height = z_rod_spacing - x_end_threaded_rod_height; 
 
-extra_height = z_rod_spacing - holder_base_to_rod_centre - x_end_base_to_rod_centre; 
-
-echo(extra_height);
+holder_z = bearing_centre_height - holder_base_to_rod_centre;
 
 Z_LM8UU_holder();
 
@@ -27,13 +29,13 @@ module Z_LM8UU_holder(){
 	difference(){
 
 		union(){
-			translate([0, holder_spacing, extra_height])
+			translate([0, holder_spacing, holder_z])
 				 lm8uu_holder();
 			
-			translate([0, -holder_spacing, extra_height])
+			translate([0, -holder_spacing, holder_z])
 				 lm8uu_holder();
 
-			linear_extrude(height=4)
+			linear_extrude(height=holder_z + 8)
 				base_2d();
 		}
 
@@ -74,15 +76,7 @@ module base_2d(){
 
 module LM8UU_hole(){
 	
-	translate([0,0,(LM8UU_dia/2)+body_wall_thickness+extra_height])		
+	translate([0,0,bearing_centre_height])		
 					rotate([90,0,0])
-						cylinder(r=(LM8UU_dia/2), h=120, center=true);
-}
-
-// match hole from LM8UU holder
-// nophead's polyhole module for better lm8uu-fit
-module polyhole(d,h) {
-    n = max(round(2 * d),3);
-    rotate([0,0,180])
-        cylinder(h = h, r = (d / 2) / cos (180 / n), $fn = n);
+						cylinder(r=(linear_bearing_radius), h=120, center=true);
 }

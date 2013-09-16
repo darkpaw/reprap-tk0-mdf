@@ -1,10 +1,10 @@
 
 include <z_components.scad>
+include <configuration.scad>
 
 z_bottom_shelf_height = 4; 
 z_bottom_shelf_gap = 44;
 
-//translate([20,0,0]) rod_clamp_holes();
 
 rotate([0,-90,0]) z_bottom();
 
@@ -12,7 +12,6 @@ rotate([0,-90,0]) z_bottom();
 module z_bottom(){
 
 	support_pos = 27;
-
 
 	union(){  
 

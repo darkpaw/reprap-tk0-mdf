@@ -39,7 +39,7 @@ screw_elevation = LM8UU_dia + body_wall_thickness + (screw_thread_dia/2) +screw_
 // TEST - uncomment to render in openscad:
 
 // lm8uu_holder(1);		// WITH mountplate
-// lm8uu_holder();		// WITHOUT mountplate
+lm8uu_holder();		// WITHOUT mountplate
 
 
 // nophead's polyhole module for better lm8uu-fit

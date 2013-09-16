@@ -1,20 +1,21 @@
 
 include <common_components.scad>
-
+include <configuration.scad>
 
 x_end_length = 100;
 x_end_width = 56;
 x_end_thickness = 8;
 x_rod_spacing = 70;
-rod_radius = 4;
 rod_inset = 12;
-bearing_mount_width = 7;
+bearing_mount_width = 14;
+motor_mount_width = 5;
 half_belt_gap_length = 20;
  
 // threaded rod mount
-rod_height = 12;
+rod_height = x_end_threaded_rod_height - x_end_thickness;
 rod_mount_thickness = 26;
    
+bearing_bolt_height = 12;
 
 // testing
 
@@ -29,7 +30,79 @@ rod_mount_thickness = 26;
 
 //mirror([1,0,0]) x_end_with_bearing_or_motor(1);
 
-//!x_end_with_bearing_or_motor(0);
+!x_end_with_bearing_or_motor(0);
+x_end_with_bearing_or_motor(1);
+mirror([0,1,0]) x_end_base_v2();
+bearing_mount_2d();
+bearing_mount();
+
+
+
+module bearing_mount(){
+	
+	difference(){
+
+		linear_extrude(height=bearing_mount_width){
+			bearing_mount_2d();
+		}
+		
+		translate([0,bearing_bolt_height,-1])
+			rotate([0,0,90])
+				#cylinder(r=7.5, h=4, $fn=6);
+
+	}
+}
+
+module bearing_mount_2d(){
+
+	bolt_radius = 4;
+	bolt_height = 12;
+	radius = 10.0;
+
+	difference(){
+			
+		hull(){
+	
+			translate([0, bearing_bolt_height ])
+				circle(r=radius);
+			polygon(points = [[radius,-15], [0, rod_height],[-radius, -15]]);
+	
+		}
+
+		#translate([0, bearing_bolt_height ])
+			circle(r=bolt_radius, $fn=50);
+	
+	}
+
+}
+
+
+module x_end_base_v2(){
+	
+	w = x_end_length / 2 - 4;
+	h = x_end_width / 2 - 4;
+	
+	minkowski(){
+		
+		linear_extrude(height=x_end_thickness){
+			polygon(points=[
+					[-w,-h], 
+					[-w,h],
+					[w,h],
+					[w,-h],
+					[20,-h],
+					[20,-(h+10)],
+					[-20,-(h+10)],
+					[-20,-h]
+			]); 
+		}	
+		
+		cylinder(r=4, h=0.1);
+
+	}
+
+}
+
 
 module wiring_support(){
 
@@ -63,8 +136,9 @@ module x_end_with_bearing_or_motor(motor=1){
 		union(){
 		
 			// base
-			linear_extrude(height=x_end_thickness)
-				x_end_base_2d();
+			//linear_extrude(height=x_end_thickness)
+			//	x_end_base_2d();
+			mirror([0,1,0]) x_end_base_v2();
 
 			// X rod mounts
 			translate([rod_pos, x_end_width / 2, x_end_thickness])
@@ -80,19 +154,19 @@ module x_end_with_bearing_or_motor(motor=1){
 	
 			
 			// bearing/motor mount base
-			translate([-rod_pos, x_end_width / 2 - bearing_mount_width, x_end_thickness])
-				cube(size=[x_rod_spacing, bearing_mount_width, x_end_thickness], center=false);
+			translate([-rod_pos+6.5, x_end_width / 2 - rod_inset, x_end_thickness])
+				cube(size=[x_rod_spacing-13, rod_inset, x_end_thickness], center=false);
 
 			if(motor==1){		
 				// motor mount
 				translate([0, x_end_width / 2, x_end_thickness * 2 - 0.1])		
 					rotate([90,-90,0])
-						linear_extrude(height=bearing_mount_width)
+						linear_extrude(height=motor_mount_width)
 							x_end_motor_bracket_2d();
 
 			} else {	
 				// bearing mount
-				translate([0, x_end_width / 2, x_end_thickness * 2 - 0.1])		
+				translate([0, x_end_width / 2 + 10, x_end_thickness * 2 - 0.1])		
 					rotate([90,0,0])
 						bearing_mount();
 			}
@@ -105,14 +179,22 @@ module x_end_with_bearing_or_motor(motor=1){
 
 		}
 		
+		// extra room for bearing and idler pulley/belt
+		if(motor==0){		
+
+				translate([0, x_end_width / 2 - 3.9, x_end_thickness * 2 - 0.1 + 12])
+					rotate([90, 0, 0])
+						#cylinder(r=18, h=12);
+		}
+
 		// hole
 		translate([0,0,-1])
 			#linear_extrude(height=x_end_thickness+2)
 				hull(){
-					translate([-half_belt_gap_length, x_end_width/2 - rod_inset - 5])
+					translate([-half_belt_gap_length, x_end_width/2 - rod_inset - 9])
 						circle(r=7);
 	
-					translate([half_belt_gap_length, x_end_width/2 - rod_inset - 5])
+					translate([half_belt_gap_length, x_end_width/2 - rod_inset - 9])
 						circle(r=7);
 				}
 					
@@ -121,21 +203,21 @@ module x_end_with_bearing_or_motor(motor=1){
 		translate([0,0,-1])
 			#linear_extrude(height=x_end_thickness+2){
 				translate([-x_end_length / 2 + 9, - x_end_width/2 + rod_mount_thickness/2])
-					circle(r=4);
+					circle(r=4, $fn=30);
 	
 				translate([x_end_length / 2 - 9, - x_end_width/2 + rod_mount_thickness/2])
-					circle(r=4);
+					circle(r=4, $fn=30);
 			}
 			
 
 		// X rod holes through base
 		#translate([rod_pos, x_end_width / 2 - rod_inset, -1])
 			linear_extrude(height=x_end_thickness+2)
-				circle(r=rod_radius);
+				circle(r=rod_radius, $fn=30);
 	
 		translate([-rod_pos, x_end_width / 2 - rod_inset, -1])
 			linear_extrude(height=x_end_thickness+2)
-				circle(r=rod_radius);	
+				circle(r=rod_radius, $fn=30);	
 
 		// hole and nut trap for rod clamps
 		translate([-x_end_length / 2 - 5, x_end_width / 2 - rod_inset, x_end_thickness/2])
@@ -197,38 +279,6 @@ module x_end_motor_bracket_2d(){
  
 
 
-
-module bearing_mount(){
-	
-	linear_extrude(height=bearing_mount_width){
-		bearing_mount_2d();
-	}
-
-}
-
-module bearing_mount_2d(){
-
-	bolt_radius = 4;
-	bolt_height = 12;
-	bearing_mount_width = 28;
-
-	difference(){
-			
-		hull(){
-	
-			translate([0, bolt_height])
-				circle(r=bearing_mount_width/2);
-			polygon(points = [[bearing_mount_width/2,0], [0, rod_height],[-bearing_mount_width/2, 0]]);
-	
-		}
-
-		#translate([0, bolt_height])
-			circle(r=bolt_radius, $fn=50);
-	
-	}
-
-}
-
 module threaded_rod_mount(){
 
 	rod_mount_length = 46;
@@ -280,9 +330,6 @@ module threaded_rod_mount_2d(){
 	
 		}
 
-		//#translate([0, rod_height])
-//			circle(r=rod_radius+2.5, $fn=50);
-//	
 	}
 
 }
@@ -299,7 +346,7 @@ module x_end_base(){
 module x_end_rod_mount_2d(){
 
 	rod_end_height = rod_inset;
-	rod_end_width = 16.5; 
+	rod_end_width = rod_radius * 2 + 9;  //16.5; 
 
 	difference(){
 
@@ -310,7 +357,7 @@ module x_end_rod_mount_2d(){
 		}
 		
 		#translate([0, rod_end_height])
-			circle(r=rod_radius);
+			circle(r=rod_radius, $fn=30);
 	}
 
 }

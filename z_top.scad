@@ -1,7 +1,6 @@
 
-//include <common_components.scad>
-
 include <z_components.scad>
+include <configuration.scad>
 
 module z_shelf_bearing(){ 
 
@@ -14,12 +13,12 @@ module z_shelf_bearing(){
 		union(){	
 			// hole for rod
 			translate([z_shelf_rod_pos, 0, -1]){
-				cylinder(h=z_shelf_height + 2, r=rod_radius);
+				cylinder(h=z_shelf_height + 2, r=rod_radius, $fn=30);
 			}
 			
 			// hole for bearing
 			translate([z_shelf_bearing_pos, 0, bearing_holder]){
-				cylinder(h=z_shelf_height, r=bearing_radius);
+				cylinder(h=z_shelf_height, r=bearing_radius, $fn=60);
 			}
 
 			// hole for rod through bearing
