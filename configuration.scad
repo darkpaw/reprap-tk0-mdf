@@ -1,6 +1,6 @@
 
 
-rod_radius = 6.0;
+rod_radius = 4.0;
 frame_rod_radius = 4.0;
 z_threaded_rod_radius = 4.0;
 
