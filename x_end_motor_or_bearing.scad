@@ -30,8 +30,8 @@ bearing_bolt_height = 12;
 
 //mirror([1,0,0]) x_end_with_bearing_or_motor(1);
 
-!x_end_with_bearing_or_motor(0);
-x_end_with_bearing_or_motor(1);
+x_end_with_bearing_or_motor(0);
+!x_end_with_bearing_or_motor(1);
 mirror([0,1,0]) x_end_base_v2();
 bearing_mount_2d();
 bearing_mount();
@@ -159,10 +159,20 @@ module x_end_with_bearing_or_motor(motor=1){
 
 			if(motor==1){		
 				// motor mount
-				translate([0, x_end_width / 2, x_end_thickness * 2 - 0.1])		
+				translate([0, x_end_width / 2, x_end_thickness * 2 - 0.1])	{	
+
 					rotate([90,-90,0])
 						linear_extrude(height=motor_mount_width)
 							x_end_motor_bracket_2d();
+					
+					translate([25, -5, 0])
+						cylinder(r=5, h = 36);
+
+					translate([-25, -5, 0])
+						cylinder(r=5, h = 36);
+						//cube([5, 10, 35], center=true);
+				}
+				
 
 			} else {	
 				// bearing mount
